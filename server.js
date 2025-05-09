@@ -50,59 +50,7 @@ async function scrapePrice() {
 }
 
 // Збираємо щохвилини (для тесту) — поміняєш на '0 16 * * *' для 16:00
-cron.schedule('* * * * *', scrapePrice);
-
-// // Вебінтерфейс
-// app.get('/', async (req, res) => {
-//   const allPrices = await Price.find().sort({ timestamp: 1 });
-//   const grouped = {};
-
-//   allPrices.forEach(p => {
-//     if (!grouped[p.isin]) grouped[p.isin] = [];
-//     grouped[p.isin].push(p);
-//   });
-
-//   let chartsHtml = '';
-//   for (const [isin, records] of Object.entries(grouped)) {
-//     const labels = records.map(r => r.timestamp.toISOString().split('T')[0]);
-//     const prices = records.map(r => r.price);
-//     const canvasId = `chart_${isin}`;
-
-//     chartsHtml += `
-//       <h3>${isin}</h3>
-//       <canvas id="${canvasId}" width="800" height="300"></canvas>
-//       <script>
-//         new Chart(document.getElementById('${canvasId}').getContext('2d'), {
-//           type: 'line',
-//           data: {
-//             labels: ${JSON.stringify(labels)},
-//             datasets: [{
-//               label: 'Ціна (UAH)',
-//               data: ${JSON.stringify(prices)},
-//               borderColor: 'blue',
-//               fill: false,
-//               tension: 0.1
-//             }]
-//           }
-//         });
-//       </script>
-//     `;
-//   }
-
-//   res.send(`
-//     <!DOCTYPE html>
-//     <html>
-//     <head>
-//       <title>Облігації</title>
-//       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-//     </head>
-//     <body>
-//       <h2>Графіки облігацій</h2>
-//       ${chartsHtml}
-//     </body>
-//     </html>
-//   `);
-// });
+cron.schedule('0 6 * * *', scrapePrice);
 
 app.get('/', async (req, res) => {
     const allPrices = await Price.find().sort({ timestamp: 1 });
