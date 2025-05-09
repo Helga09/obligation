@@ -6,17 +6,21 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - mongo
+      - postgres
     environment:
-      - MONGO_URL=mongodb://mongo:27017/bonds
+      - POSTGRES_URL=postgres://postgres:postgres@postgres:5432/bonds
     restart: unless-stopped
 
-  mongo:
-    image: mongo:6
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: bonds
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - '27017:27017'
+      - '5432:5432'
     volumes:
-      - mongo-data:/data/db
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  mongo-data:
+  postgres-data:
