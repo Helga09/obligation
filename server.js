@@ -74,7 +74,7 @@ async function scrapePrice() {
 }
 
 // Збираємо щодня о 6:00
-cron.schedule('0 6 * * *', scrapePrice);
+cron.schedule('* * * * *', scrapePrice);
 
 // Головна сторінка
 app.get('/', async (req, res) => {
